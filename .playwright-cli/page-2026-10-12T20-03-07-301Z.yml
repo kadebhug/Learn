@@ -1,0 +1,38 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link "Grove" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation "Primary" [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: /
+        - link "Paths" [ref=e10] [cursor=pointer]:
+          - /url: /paths
+        - link "Review" [ref=e13] [cursor=pointer]:
+          - /url: /review
+        - link "You" [ref=e16] [cursor=pointer]:
+          - /url: /you
+    - generic [ref=e21]:
+      - banner [ref=e22]:
+        - generic [ref=e23]:
+          - paragraph [ref=e24]: Good evening
+          - heading "Friend" [level=1] [ref=e25]
+        - generic [ref=e26]:
+          - paragraph [ref=e27]:
+            - generic [ref=e30]: 0 days
+          - generic "Level 1" [ref=e31]: "1"
+      - generic [ref=e36]:
+        - paragraph [ref=e37]: Machine learning, without the fog
+        - heading "Patterns, not magic" [level=2] [ref=e38]
+        - paragraph [ref=e39]: 4 min · What a model actually is
+        - link "Continue" [ref=e40] [cursor=pointer]:
+          - /url: /learn/machine-learning/ml-patterns
+      - link "Daily challenge Five questions, then a one-minute match. Play" [ref=e42] [cursor=pointer]:
+        - /url: /challenge
+        - generic [ref=e43]:
+          - generic [ref=e44]: Daily challenge
+          - text: Five questions, then a one-minute match.
+        - generic [ref=e45]: Play
+  - alert [ref=e46]
