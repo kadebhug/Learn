@@ -1,10 +1,13 @@
 import type { Activity, Lesson, Module, Topic } from "./types";
 import { criticalThinking } from "./sample/critical-thinking";
-import { machineLearning } from "./sample/ml";
+import { psychologyIntermediate } from "./sample/psychology-intermediate";
 import { psychologyFundamentals } from "./sample/psychology";
-import { spanishSentences } from "./sample/spanish";
 
-export const sampleTopics: Topic[] = [machineLearning, spanishSentences, psychologyFundamentals, criticalThinking];
+export const sampleTopics: Topic[] = [
+  psychologyFundamentals,
+  psychologyIntermediate,
+  criticalThinking,
+];
 
 export function allTopics(custom: Topic[]): Topic[] {
   const seen = new Set(sampleTopics.map((topic) => topic.slug));

@@ -78,6 +78,21 @@ assert.equal(
 assert.match(psychology.blurb, /not a diagnosis/i);
 assert.match(psychology.modules.find((mod) => mod.id === "psych-a7")?.summary ?? "", /not therapy/i);
 
+const practice = sampleTopics.find((topic) => topic.slug === "psychology-in-practice");
+assert.ok(practice);
+assert.equal(practice.difficulty, "intermediate");
+assert.equal(practice.minutes, 90);
+assert.equal(practice.modules.length, 8);
+assert.equal(
+  practice.modules.reduce((count, mod) => count + mod.lessons.length, 0),
+  16,
+);
+assert.match(practice.blurb, /not a diagnosis/i);
+assert.match(practice.modules.find((mod) => mod.id === "psych-i5")?.summary ?? "", /not therapy/i);
+const practiceText = JSON.stringify(practice);
+assert.equal(practiceText.includes("\u2014"), false, "em dash");
+assert.equal(practiceText.includes("\u2013"), false, "en dash");
+
 const now = Date.UTC(2026, 3, 2);
 const card = freshCard({
   id: "t:l:a",

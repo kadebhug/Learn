@@ -66,6 +66,13 @@ export function recommendation(
     const accuracy = attempts === 0 ? 0 : correct / attempts;
     const harder = nextDifficulty(topic.difficulty);
     if (harder && accuracy >= 0.8) {
+      if (topic.slug === "psychology-fundamentals") {
+        return {
+          text: "You're ready for Psychology in Practice.",
+          href: "/paths/psychology-in-practice",
+          label: "Start the next path",
+        };
+      }
       return {
         text: `You're ready for the next level of ${topic.title}.`,
         href: `/paths/new?topic=${encodeURIComponent(topic.title)}&difficulty=${harder}`,
