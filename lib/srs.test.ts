@@ -3,16 +3,80 @@ import { sampleTopics } from "./catalog";
 import { parseTopic } from "./schema";
 import { freshCard, schedule } from "./srs";
 import { nextStreak } from "./text";
+import type { Activity } from "./types";
 
-for (const topic of sampleTopics) {
-  const parsed = parseTopic(topic);
-  assert.equal(parsed.modules.length > 0, true);
-  for (const mod of parsed.modules) {
-    for (const lesson of mod.lessons) {
-      assert.ok(lesson.blocks.some((block) => block.type === "activity"));
+const ids = new Set<string>();
+
+function claim(id: string) {
+  assert.equal(ids.has(id), false, `duplicate id ${id}`);
+  ids.add(id);
+}
+
+function assertActivity(activity: Activity) {
+  if (activity.type === "choice" || activity.type === "scenario") {
+    assert.ok(activity.answerIndex >= 0 && activity.answerIndex < activity.options.length, activity.id);
+    assert.equal(new Set(activity.options).size, activity.options.length, activity.id);
+  }
+  if (activity.type === "match") {
+    assert.ok(activity.pairs.length >= 2 && activity.pairs.length <= 6, activity.id);
+    assert.equal(new Set(activity.pairs.map((pair) => pair.left)).size, activity.pairs.length, activity.id);
+    assert.equal(new Set(activity.pairs.map((pair) => pair.right)).size, activity.pairs.length, activity.id);
+  }
+  if (activity.type === "map") {
+    assert.ok(activity.steps.length >= 3 && activity.steps.length <= 6, activity.id);
+    assert.equal(new Set(activity.steps).size, activity.steps.length, activity.id);
+  }
+  if (activity.type === "short" || activity.type === "teach") {
+    const points = activity.type === "short" ? activity.rubric : activity.keyPoints;
+    for (const point of points) {
+      const tokens = point.toLowerCase().split(/\s+/).filter((word) => word.length > 3);
+      assert.ok(tokens.length > 0, `${activity.id} point "${point}" has no checkable word`);
     }
   }
 }
+
+for (const topic of sampleTopics) {
+  const parsed = parseTopic(topic);
+  assert.equal(parsed.slug, topic.slug);
+  claim(topic.slug);
+  const minutes = topic.modules.reduce(
+    (sum, mod) => sum + mod.lessons.reduce((inner, lesson) => inner + lesson.minutes, 0),
+    0,
+  );
+  assert.equal(parsed.minutes, minutes);
+  for (const mod of parsed.modules) {
+    claim(`${topic.slug}:${mod.id}`);
+    assert.ok(mod.lessons.length > 0);
+    for (const lesson of mod.lessons) {
+      claim(`${topic.slug}:${lesson.id}`);
+      assert.equal(lesson.blocks[0]?.type, "explain", lesson.id);
+      assert.ok(lesson.blocks.some((block) => block.type === "activity"), lesson.id);
+      for (const block of lesson.blocks) {
+        claim(`${topic.slug}:${block.id}`);
+        if (block.type !== "activity") continue;
+        claim(`${topic.slug}:${block.activity.id}`);
+        assertActivity(block.activity);
+      }
+    }
+  }
+}
+
+const psychology = sampleTopics.find((topic) => topic.slug === "psychology-fundamentals");
+const critical = sampleTopics.find((topic) => topic.slug === "critical-thinking");
+assert.ok(psychology);
+assert.ok(critical);
+assert.equal(psychology.modules.length, 8);
+assert.equal(critical.modules.length, 8);
+assert.equal(
+  psychology.modules.reduce((count, mod) => count + mod.lessons.length, 0),
+  16,
+);
+assert.equal(
+  critical.modules.reduce((count, mod) => count + mod.lessons.length, 0),
+  16,
+);
+assert.match(psychology.blurb, /not a diagnosis/i);
+assert.match(psychology.modules.find((mod) => mod.id === "psych-a7")?.summary ?? "", /not therapy/i);
 
 const now = Date.UTC(2026, 3, 2);
 const card = freshCard({

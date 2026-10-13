@@ -2,10 +2,12 @@
 
 Short lessons for any topic, with review that actually comes back.
 
-Grove ships with two courses you can finish immediately:
+Grove ships with four courses you can finish immediately:
 
 - Machine learning, without the fog
 - Spanish in real sentences
+- Psychology Fundamentals
+- Critical Thinking and Logic
 
 Progress, streaks, and courses you create stay in this browser (`localStorage`). There is no account.
 

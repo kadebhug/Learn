@@ -121,6 +121,7 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
           {!reduce && <Burst />}
           <p className="text-sm font-semibold text-on-grove/80">{finished.leveled ? "Level up" : "Lesson clear"}</p>
           <h1 className="mt-1 text-3xl font-semibold tracking-tight">{lesson.title}</h1>
+          <p className="mt-3 text-lg leading-snug">{lesson.summary}</p>
           <p className="mt-2 text-on-grove/85">
             {finished.xp > 0 ? `You picked up ${finished.xp} XP.` : "You already had this one. The review cards are refreshed."}
           </p>
@@ -183,11 +184,36 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
   );
 }
 
+function TeachBody({ text }: { text: string }) {
+  const chunks = text.trim().split(/\n\s*\n/);
+  return (
+    <div className="grid gap-3 text-[17px] leading-relaxed">
+      {chunks.map((chunk) => {
+        const lines = chunk
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean);
+        const list = lines.length > 0 && lines.every((line) => line.startsWith("- "));
+        if (list) {
+          return (
+            <ul key={chunk} className="grid list-disc gap-2 pl-5">
+              {lines.map((line) => (
+                <li key={line}>{line.slice(2)}</li>
+              ))}
+            </ul>
+          );
+        }
+        return <p key={chunk}>{lines.join(" ")}</p>;
+      })}
+    </div>
+  );
+}
+
 function Explain({ block }: { block: Extract<Lesson["blocks"][number], { type: "explain" }> }) {
   return (
     <article className="grid gap-4">
       <h2 className="text-2xl font-semibold tracking-tight">{block.heading}</h2>
-      <p className="text-[17px] leading-relaxed">{block.body}</p>
+      <TeachBody text={block.body} />
       {block.analogy && (
         <p className="rounded-[20px] bg-soft px-4 py-4 leading-relaxed">
           <span className="font-semibold">Picture it. </span>
