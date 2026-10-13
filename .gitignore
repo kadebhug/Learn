@@ -1,6 +1,7 @@
 node_modules
 .next
 out
+.pages-api-stash
 .vercel
 *.log
 .env

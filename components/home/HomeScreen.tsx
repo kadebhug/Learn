@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Flame } from "@phosphor-icons/react";
 import { allTopics, flatLessons, nextLesson, progressKey } from "@/lib/catalog";
+import { lessonHref, topicHref } from "@/lib/hrefs";
 import { recommendation } from "@/lib/recommend";
 import { isDue } from "@/lib/srs";
 import { useGrove } from "@/lib/store";
@@ -31,7 +32,7 @@ export function HomeScreen() {
     const step = nextLesson(topic, (id) => Boolean(lessons[progressKey(topic.slug, id)]?.completed));
     if (step) {
       current = {
-        href: `/learn/${topic.slug}/${step.lesson.id}`,
+        href: lessonHref(topic, step.lesson.id),
         kicker: topic.title,
         title: step.lesson.title,
         detail: `${step.lesson.minutes} min · ${step.module.title}`,
@@ -43,7 +44,7 @@ export function HomeScreen() {
     const first = flatLessons(topics[0])[0];
     current = first
       ? {
-          href: `/paths/${topics[0].slug}`,
+          href: topicHref(topics[0]),
           kicker: "Paths clear",
           title: "Pick a review, or start another topic",
           detail: topics[0].title,

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { topicHref } from "@/lib/hrefs";
 import { parseTopic } from "@/lib/schema";
 import { useGrove } from "@/lib/store";
 import type { Difficulty, Topic } from "@/lib/types";
@@ -11,13 +12,21 @@ import { useHydrated } from "@/lib/use-hydrated";
 import { field, primaryBtn, quietBtn } from "@/components/ui";
 
 export default function EditPathPage() {
-  const params = useParams<{ slug: string }>();
+  return (
+    <Suspense fallback={<p className="px-5 py-10 text-muted">Opening your grove...</p>}>
+      <EditPathForm />
+    </Suspense>
+  );
+}
+
+function EditPathForm() {
+  const slug = useSearchParams().get("slug") ?? "";
   const router = useRouter();
   const hydrated = useHydrated();
   const customTopics = useGrove((state) => state.customTopics);
   const saveTopic = useGrove((state) => state.saveTopic);
   const removeTopic = useGrove((state) => state.removeTopic);
-  const existing = customTopics.find((topic) => topic.slug === params.slug) ?? null;
+  const existing = customTopics.find((topic) => topic.slug === slug) ?? null;
   const [draft, setDraft] = useState<Topic | null>(null);
   const [raw, setRaw] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -246,7 +255,7 @@ export default function EditPathPage() {
             try {
               const parsed = parseTopic({ ...draft, source: draft.source === "sample" ? "custom" : draft.source });
               saveTopic(parsed);
-              router.push(`/paths/${parsed.slug}`);
+              router.push(topicHref(parsed));
             } catch {
               setMessage("Fix the empty fields before saving.");
             }

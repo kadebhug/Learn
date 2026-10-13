@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion, motion } from "motion/react";
 import { ArrowLeft, Check } from "@phosphor-icons/react";
 import { flatLessons } from "@/lib/catalog";
+import { lessonHref, topicHref } from "@/lib/hrefs";
 import { useGrove } from "@/lib/store";
 import type { Lesson, Topic } from "@/lib/types";
 import { levelFor } from "@/lib/xp";
@@ -129,7 +130,7 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
         </div>
         <div className="flex flex-wrap gap-2">
           {upcoming ? (
-            <Link href={`/learn/${topic.slug}/${upcoming.lesson.id}`} className={primaryBtn}>
+            <Link href={lessonHref(topic, upcoming.lesson.id)} className={primaryBtn}>
               Next lesson
             </Link>
           ) : (
@@ -137,7 +138,7 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
               Review the cards
             </Link>
           )}
-          <Link href={`/paths/${topic.slug}`} className={quietBtn}>
+          <Link href={topicHref(topic)} className={quietBtn}>
             Back to the path
           </Link>
         </div>
@@ -148,7 +149,7 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
   return (
     <main className="mx-auto flex min-h-[100dvh] w-full max-w-xl flex-col px-5">
       <header className="flex items-center gap-3 py-4">
-        <Link href={`/paths/${topic.slug}`} aria-label="Back to the path" className="grid size-11 place-items-center rounded-full ring-1 ring-line">
+        <Link href={topicHref(topic)} aria-label="Back to the path" className="grid size-11 place-items-center rounded-full ring-1 ring-line">
           <ArrowLeft size={18} aria-hidden />
         </Link>
         <div className="min-w-0 flex-1">

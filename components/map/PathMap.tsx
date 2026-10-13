@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Check } from "@phosphor-icons/react";
 import { flatLessons, progressKey } from "@/lib/catalog";
+import { lessonHref } from "@/lib/hrefs";
 import { useGrove } from "@/lib/store";
 import type { Topic } from "@/lib/types";
 
@@ -27,7 +28,7 @@ export function PathMap({ topic }: { topic: Topic }) {
               return (
                 <li key={lesson.id}>
                   <Link
-                    href={`/learn/${topic.slug}/${lesson.id}`}
+                    href={lessonHref(topic, lesson.id)}
                     className={`flex min-h-16 items-center gap-3 rounded-[20px] px-3 py-3 ring-1 ${
                       suggested ? "bg-grove-deep text-on-grove ring-grove-deep" : "bg-surface ring-line"
                     }`}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { allTopics } from "@/lib/catalog";
+import { apiUrl, staticExport, topicHref } from "@/lib/hrefs";
 import { parseTopic } from "@/lib/schema";
 import { makeStarter } from "@/lib/starter";
 import { useGrove } from "@/lib/store";
@@ -46,7 +47,7 @@ function NewPathForm() {
   function keep(topic: Topic, note: string) {
     saveTopic(topic);
     setMessage(note);
-    router.push(`/paths/${topic.slug}`);
+    router.push(topicHref(topic));
   }
 
   async function generate() {
@@ -54,10 +55,17 @@ function NewPathForm() {
       setMessage("Name the topic first.");
       return;
     }
+    if (staticExport) {
+      keep(
+        makeStarter(title, difficulty, notes, taken),
+        "This public copy has no course builder, so this is a starter outline. You can edit every lesson.",
+      );
+      return;
+    }
     setBusy(true);
     setMessage(null);
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch(apiUrl("/api/generate"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: title.trim(), difficulty, notes, taken }),

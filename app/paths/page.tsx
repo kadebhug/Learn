@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { allTopics, difficultyLabel, flatLessons, progressKey } from "@/lib/catalog";
+import { topicHref } from "@/lib/hrefs";
 import { useGrove } from "@/lib/store";
 import { useHydrated } from "@/lib/use-hydrated";
 import { card, primaryBtn } from "@/components/ui";
@@ -36,7 +37,7 @@ export default function PathsPage() {
           const ratio = items.length === 0 ? 0 : done / items.length;
           return (
             <li key={topic.slug}>
-              <Link href={`/paths/${topic.slug}`} className={`${card} block px-4 py-4`}>
+              <Link href={topicHref(topic)} className={`${card} block px-4 py-4`}>
                 <div className="flex items-start justify-between gap-3">
                   <h2 className="text-lg font-semibold tracking-tight">{topic.title}</h2>
                   <span className="shrink-0 rounded-full bg-soft px-2 py-1 text-xs font-semibold text-grove-deep">

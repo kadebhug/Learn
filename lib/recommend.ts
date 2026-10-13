@@ -1,4 +1,5 @@
 import { flatLessons, nextDifficulty, progressKey } from "./catalog";
+import { lessonHref } from "./hrefs";
 import type { LessonStat, Topic } from "./types";
 
 export type Recommendation = {
@@ -36,7 +37,7 @@ export function recommendation(
           topic,
           title: mod.title,
           accuracy,
-          href: `/learn/${topic.slug}/${mod.lessons[0]!.id}`,
+          href: lessonHref(topic, mod.lessons[0]!.id),
         };
       }
     }

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { localFeedback } from "@/lib/feedback";
+import { apiUrl } from "@/lib/hrefs";
 import type { Feedback } from "@/lib/schema";
 import { hashString, norm, shuffle } from "@/lib/text";
 import type { Activity } from "@/lib/types";
@@ -305,7 +306,7 @@ function ShortView({
     setBusy(true);
     setNote(null);
     try {
-      const response = await fetch("/api/feedback", {
+      const response = await fetch(apiUrl("/api/feedback"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: activity.prompt, answer: value, keyPoints: activity.rubric }),
@@ -459,7 +460,7 @@ function TeachView({
     let result = localFeedback(value, activity.keyPoints);
     let from: "notes" | "grove" = "notes";
     try {
-      const response = await fetch("/api/feedback", {
+      const response = await fetch(apiUrl("/api/feedback"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: activity.prompt, answer: value, keyPoints: activity.keyPoints }),
