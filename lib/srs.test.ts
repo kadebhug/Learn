@@ -93,6 +93,21 @@ const practiceText = JSON.stringify(practice);
 assert.equal(practiceText.includes("\u2014"), false, "em dash");
 assert.equal(practiceText.includes("\u2013"), false, "en dash");
 
+const life = sampleTopics.find((topic) => topic.slug === "what-a-life-is-for");
+assert.ok(life);
+assert.equal(life.difficulty, "beginner");
+assert.equal(life.minutes, 90);
+assert.equal(life.modules.length, 8);
+assert.equal(
+  life.modules.reduce((count, mod) => count + mod.lessons.length, 0),
+  16,
+);
+assert.match(life.blurb, /not a diagnosis/i);
+assert.match(life.modules.find((mod) => mod.id === "life-m7")?.summary ?? "", /qualified/i);
+const lifeText = JSON.stringify(life);
+assert.equal(lifeText.includes("\u2014"), false, "em dash");
+assert.equal(lifeText.includes("\u2013"), false, "en dash");
+
 const now = Date.UTC(2026, 3, 2);
 const card = freshCard({
   id: "t:l:a",

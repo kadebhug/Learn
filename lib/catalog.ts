@@ -2,11 +2,13 @@ import type { Activity, Lesson, Module, Topic } from "./types";
 import { criticalThinking } from "./sample/critical-thinking";
 import { psychologyIntermediate } from "./sample/psychology-intermediate";
 import { psychologyFundamentals } from "./sample/psychology";
+import { whatALifeIsFor } from "./sample/what-a-life-is-for";
 
 export const sampleTopics: Topic[] = [
   psychologyFundamentals,
   psychologyIntermediate,
   criticalThinking,
+  whatALifeIsFor,
 ];
 
 export function allTopics(custom: Topic[]): Topic[] {
