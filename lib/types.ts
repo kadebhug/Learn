@@ -86,6 +86,7 @@ export type ExplainBlock = {
   heading: string;
   body: string;
   example?: string;
+  examples?: string[];
   analogy?: string;
 };
 

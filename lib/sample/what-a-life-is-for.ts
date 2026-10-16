@@ -5,7 +5,7 @@ import type { Block, Lesson, Module, Topic } from "../types";
  * Education only. Nothing here assigns a calling, a diagnosis, or clinical advice.
  */
 
-function explain(id: string, heading: string, body: string, extra?: { example?: string; analogy?: string }): Block {
+function explain(id: string, heading: string, body: string, extra?: { examples?: string[]; analogy?: string }): Block {
   return { id, type: "explain", heading, body, ...extra };
 }
 
@@ -78,16 +78,19 @@ const m1Split = lesson(
     explain(
       "life-m1-split-ex",
       "One word is doing two jobs",
-      `People use "purpose" for two different questions. Psychology asks how a life comes to feel worth living: what you notice, what you need, the story you tell, and what makes effort continue on an ordinary Tuesday. Philosophy asks what would make a life good, including on a day that feels flat.
+      `People use "purpose" for two questions.
 
-A strong feeling can answer the wrong question. You can feel on fire about a goal that fails a standard you would defend once you look at it. You can feel empty during work that still meets a standard you accept.
+- How does this feel? That is the experience question: what you notice, what you need, and what keeps effort going.
+- What standard am I using, and do I accept it? That is the standard question, including on a day that feels flat.
 
-When the word shows up this week, ask which question you are in. "How does this feel?" is the psychology question. "What standard am I using, and do I accept it?" is the philosophy question. Later lessons hand you standards. This lesson only separates the questions.`,
+A strong feeling can answer the wrong one. Later lessons hand you standards. This lesson only separates the questions.`,
       {
-        example:
-          "You get news that looks right to your family and feels hollow on the train home. The hollow feeling is data about your experience. It does not yet say the news fails as a life, and it does not say your family's standard is the one you accept. Two questions are open. Only one of them is a mood.",
-        analogy:
-          "A thermometer tells you the room is cold. The coat, the window, and the decision to leave are a different tool. The reading and the standard are not the same job.",
+        examples: [
+          "Family news looks right and feels hollow on the train home. The hollow feeling is about your experience. It does not yet say the news fails as a life.",
+          "You feel on fire about a goal you would not defend once you look at it. The fire is a mood. The standard is still open.",
+          "Work you still accept feels empty on a gray Tuesday. The emptiness is data. It is not yet a verdict on the life.",
+        ],
+        analogy: "A thermometer tells you the room is cold. Whether to put on a coat is a different decision.",
       },
     ),
     match(
@@ -134,14 +137,15 @@ const m1Sentence = lesson(
     explain(
       "life-m1-sentence-ex",
       "You draft it. You do not dig it up.",
-      `A purpose you can determine is a sentence you will live with for a stretch of time, plus a way to tell if it is holding. It names a standard, who the effort is for, and what you would count as evidence.
+      `A usable purpose is a sentence you will live with for a stretch, plus a way to tell if it is holding. Name a standard, who the effort is for, and what would count as evidence. The month can support it or push a revision. A sentence you cannot imagine changing is usually a slogan.
 
-Waiting to uncover a hidden true calling treats purpose like a buried object. Some people do get a sharp sense of fit. Many do not, and a life can still be aimed. The sentence is allowed to change when the month disagrees with it. A sentence you cannot imagine changing is often a slogan.
-
-This path will not assign you a purpose. It hands you rival standards, a way to see what you already protect, and a draft you can test for a month. That is education. A therapist, a clergy person you trust, or a mentor can sit with the personal weight. They do not replace the thinking. The thinking does not replace them when distress is serious.`,
+This path will not assign you a calling. When distress is serious, a therapist, a clergy person you trust, or a mentor can sit with the weight.`,
       {
-        example:
-          "\"I will use careful explanations so new people on the team can learn the system, because competence and fairness matter here.\" A month can check it: did you explain things, and would you still respect the sentence if nobody thanked you?",
+        examples: [
+          "\"I will use careful explanations so new people can learn the system, because competence and fairness matter here.\" Check the month: did you explain things, and would you still respect the sentence if nobody thanked you?",
+          "\"For this season I will use Sunday mornings to call my brother, because I accept that duty.\" The check is the calls, not whether you feel called.",
+          "\"I was born to lead\" has no someone, no evidence, and no way to revise. That is a slogan.",
+        ],
       },
     ),
     blank(
@@ -183,14 +187,15 @@ const m2Goods = lesson(
     explain(
       "life-m2-goods-ex",
       "Pleasant is a real good, and a partial one",
-      `One standard says a life is going well when it feels good: pleasure, comfort, and less pain. Call that the feeling-good standard. It is a serious standard. Pain matters. A theory that shrugs at misery has a hole in it.
+      `Feeling good is a real good, and a partial one: pleasure, comfort, and less pain. Pain matters. A theory that shrugs at misery has a hole in it.
 
-A second standard says a life is going well when you are active at things you take to matter, with other people, across time. A hard week of practice, care, or repair can score well here and poorly on comfort. Philosophers in Aristotle's line call a version of this flourishing. You can use the split without the Greek word.
-
-Each standard has a cost. Feeling-good can bless a pleasant life you would not respect. Picture a machine that gave you only enjoyable experiences and removed every real responsibility. If you would refuse to plug in for good, pleasure is not your whole standard. Flourishing can turn harsh: it can slight rest, luck, and people who are hurting, and a single week is too short to judge it.`,
+A second standard looks at activity you take to matter, with other people, across time. A hard week can score well there and poorly on comfort. Feeling-good can bless a pleasant life you would not respect. The activity standard can turn harsh if it slights rest, luck, and people who are hurting.`,
       {
-        example:
-          "A Sunday on the couch can honor the feeling-good standard after a hard week. A year of only that, with work you do not respect and no one you show up for, can pass the mood test and fail the life you would defend.",
+        examples: [
+          "A Sunday on the couch can honor feeling-good after a hard week. A year of only that, with work you do not respect and no one you show up for, can pass the mood and fail the life you would defend.",
+          "If you would refuse a machine of only pleasant experiences, with every real responsibility removed, pleasure is not your whole standard.",
+          "A hard month of practice can feel bad and still fit activity you take to matter. One easy year is not the whole verdict either.",
+        ],
       },
     ),
     choice(
@@ -245,18 +250,15 @@ const m2Mood = lesson(
     explain(
       "life-m2-mood-ex",
       "Read the mood, then ask the standard",
-      `A mood is information about your state. Flat, proud, ashamed, restless, and relieved all report something. Psychology Fundamentals treats a feeling as a signal. This lesson asks whether that signal is also a verdict on the life.
+      `A mood reports your state. Flat, proud, ashamed, restless, and relieved all say something. A mood is a verdict on the life only when you can name the standard it speaks to.
 
-Sometimes the signal and the standard agree. You feel ashamed because you broke a promise you still accept. The next move is repair.
-
-Sometimes the mood is loud and the standard is quiet. You feel empty on a gray Tuesday during work you still think matters. Sleep, a stuck problem, or a week with no person in it can do that. Treating the Tuesday as "I have the wrong life" skips the smaller causes.
-
-Sometimes the mood is pleasant and the standard is missed. Praise, a purchase, or a win can feel like purpose for an afternoon. If the standard you accept is about who you are for, the afternoon does not close the case.
-
-Write two lines. Line one: what the mood is reporting. Line two: which standard, if any, it speaks to. If you cannot name a standard, you are still in the feeling. That is allowed. It is not yet a conclusion about the life.`,
+Write two lines. Line one: what the mood is reporting. Line two: which standard, if any, it speaks to. No standard on line two means you are still in the feeling.`,
       {
-        example:
-          "A kind message from your sister leaves you steady. Line one: connection landed. Line two: if you accept a standard that includes showing up for people, this is a small piece of evidence. One message is not a purpose. It does count.",
+        examples: [
+          "Shame after a promise you still accept and broke. Line one: I broke it. Line two: the standard holds, so the next move is repair.",
+          "Empty on a gray Tuesday during work you still think matters. Sleep, a stuck problem, or a week with no person can do that. The Tuesday is not yet \"I have the wrong life.\"",
+          "A win feels like purpose for an afternoon. If your standard is about who you are for, the pleasant spike does not close the case.",
+        ],
       },
     ),
     scenario(
@@ -308,14 +310,15 @@ const m3Classic = lesson(
     explain(
       "life-m3-classic-ex",
       "Two old standards you can use this week",
-      `Flourishing, in Aristotle's line, is excellent activity across a whole life: getting good at things that matter, with friends and a community, and with enough luck that the activity is possible. One strong week is a sample. If you want a verdict, it is about the shape of years. The cost is time, and the risk of looking down on people in hard circumstances.
+      `Flourishing, in Aristotle's line, is excellent activity across a life: skill that matters, other people, and enough luck that the activity is possible. One strong week is a sample. The shape that counts is years.
 
-The Stoic move is narrower, and it helps on a bad day. Your judgment and your action are up to you in a way that health, money, and reputation are not. Those externals can be worth pursuing. On this standard they are not the whole of a good life, because they can be taken. A crude version turns cold and bans grief. Grief and anger can be fitting. The move is to do the next thing you can actually do, and to stop treating the outcome as guaranteed.
-
-You can use both without merging them. Flourishing asks about the long shape. The Stoic move asks about today. A life aimed at excellent activity can still use the smaller question when a result slips.`,
+The Stoic move is for today. Your judgment and your action are up to you in a way that health, money, and reputation are not. Those can still matter, and they can be taken. Grief can be fitting. Do the next thing you can actually do.`,
       {
-        example:
-          "You prepare a class carefully. A storm leaves the room half empty. Flourishing still counts the preparation and the teaching. The Stoic move says the headcount was not yours to guarantee. Treating the headcount as the whole good misses both standards.",
+        examples: [
+          "You prepare a class carefully. A storm leaves the room half empty. Flourishing still counts the teaching. The Stoic move says the headcount was not yours to guarantee.",
+          "A great training week is a sample of flourishing, not a verdict on the years.",
+          "A lost client can sting. The next email is still yours. A version that bans grief is the crude one. This lesson does not ask for numbness.",
+        ],
       },
     ),
     match(
@@ -366,14 +369,15 @@ const m3Author = lesson(
     explain(
       "life-m3-author-ex",
       "You already chose, or you were given a duty",
-      `One line running through existentialist writers says you are already answering what your life is for, including when you say you had no choice. Taking responsibility for a meaning is authorship. The failure they circle is bad faith: pretending the situation fully writes your life, or pretending you are pure freedom with no facts, no body, and no obligations. Authorship has a cost. It can turn lonely and ignore goods you did not pick.
+      `Authorship means you are already answering, including when you say you had no choice. Bad faith is the pretense on either side: the situation fully writes your life, or you are pure freedom with no facts and no obligations.
 
-Another family of answers says some purposes are received. A promise, a child, a role, a tradition, a religious calling, or a duty to people who cannot repay you. Role ethics in the Confucian line is one careful version: you are partly your relationships, and those relationships ask things before your mood agrees. Many religious traditions say the good is given and your part is to respond. This path does not pick that answer for you. It counts it as a live standard with the same kind of test as the others.
-
-The test for a received purpose is concrete. What does it ask this week, and what would count as failing it? If the only content is "make them proud" or "do not ask questions," you may be holding someone else's sentence. A later lesson is about that trap. A real duty can be named.`,
+A received purpose is given: a promise, a role, a tradition, a faith, or a duty to someone who cannot repay you. This path does not assign one. The test is still concrete. What does it ask this week, and what would count as failing it?`,
       {
-        example:
-          "You did not choose a parent's illness. Authorship still covers how you respond this week: one visit, one bill, one honest talk. A received-duty reading says the visit is not optional merely because you lack the mood. Both can be true at once.",
+        examples: [
+          "You did not choose a parent's illness. You can still choose this week: one visit, one bill, one honest talk. The visit is not optional merely because the mood is missing.",
+          "\"Take over the shop, because that is what the family is for\" stays your uncle's sentence until you accept what it asks and the cost of failing it.",
+          "\"Make them proud\" with no week-shaped ask is hard to fail, so it is hard to live. A real duty can be named.",
+        ],
       },
     ),
     scenario(
@@ -429,14 +433,19 @@ const m4Needs = lesson(
     explain(
       "life-m4-needs-ex",
       "A direction sticks under three conditions",
-      `Psychology cannot tell you which life is the right one. It can describe when a direction you chose is easier to keep. In the self-determination tradition, three conditions show up together. Autonomy: you had a real say, rather than only a threat or a bribe. Competence: you can get better, and you can tell that you did. Relatedness: a particular person is in it with you.
+      `Psychology cannot crown the right life. It can say when a direction you chose is easier to keep.
 
-Miss one, and purpose-talk gets fragile. Say without skill becomes a wish. Skill without a say becomes a well-paid cage. People without a direction becomes belonging with nothing to belong for. These are maintenance conditions. They are not a guarantee, and they are not a moral ranking of lives.
+- Autonomy: you had a real say, not only a threat or a bribe.
+- Competence: you can get better, and you can tell.
+- Relatedness: a particular person is in it with you.
 
-Outer rewards can start a hard thing. When they become the only fuel, the activity often starts to feel like someone else's. Psychology Fundamentals already separates inner motives from points. Here, check the three conditions before you declare the purpose dead.`,
+Say without skill is a wish. Skill without a say is a well-paid cage. People without a direction is belonging with nothing to belong for. Check the missing condition before you call the purpose dead.`,
       {
-        example:
-          "You joined a night class because a friend asked, and you are improving. You still resent it because you never chose it. A real choice inside the class, such as the project topic, may restore a say before you decide the subject itself is meaningless.",
+        examples: [
+          "You are improving in a night class a friend chose for you, and you resent it. Picking the project topic may restore a say before you decide the subject is meaningless.",
+          "You do the job well and feel caged, because every goal is assigned. The skill is real. The say is missing.",
+          "Only the bonus gets the file opened. Pay can start a hard thing. As the only fuel, the say and the care are thin.",
+        ],
       },
     ),
     match(
@@ -487,14 +496,15 @@ const m4Places = lesson(
     explain(
       "life-m4-places-ex",
       "Three places, and one misuse",
-      `A practical observation from Viktor Frankl's line of work, and from ordinary life, is that meaning tends to show up in three places. A task you take responsibility for. A person you are for. A stance toward something you cannot change. You do not need all three every week. You do need to know which one you are in.
+      `Meaning tends to show up in three places: a task you take on, a person you are for, or a stance toward a fact you cannot change. One is enough to start.
 
-The stance is easy to misuse. It fits what you cannot change: an illness, a loss, a closed road. It is the wrong tool for a harm you are free to leave. Staying in a cruel situation and calling the endurance your purpose skips leaving, getting help, or setting a boundary. Psychology in Practice catches a related edit, when you rewrite a self-story to protect a label. Here the story has one job: to tell the truth about what you are doing and who it is for.
-
-You can revise the story without lying about the past. "Those years were only a waste" can become "Those years taught a skill I now use for this person," when that is accurate. It cannot become "Those years were fine" if they were not. An honest revision changes the emphasis and the next chapter.`,
+A stance fits what you cannot change. It is the wrong tool for a harm you are free to leave. Leaving, help, or a boundary comes first. An honest revision can change the emphasis and the next chapter. It cannot erase what happened.`,
       {
-        example:
-          "A layoff is not a purpose. In the month after, meaning might return as a task (a careful search), a person (showing up for someone who is also scared), or a stance (you cannot rewind the meeting, and you can decide how you talk about it). One of the three is enough to start.",
+        examples: [
+          "After a layoff, a careful search is a task, showing up for someone else who is scared is a person, and how you talk about a meeting you cannot rewind is a stance.",
+          "The old bus route closed, so you stop rehearsing it and pick a new one. That stance fits. A cruel boss you can leave is not a stance problem.",
+          "\"Those years taught a skill I now use for this person\" can be true. \"Those years were fine\" is a different move if they were not.",
+        ],
       },
     ),
     short(
@@ -540,14 +550,15 @@ const m5Protect = lesson(
     explain(
       "life-m5-protect-ex",
       "Watch the tired version of you",
-      `A stated value is what you say when you are rested and being watched. A kept value is what you protect when you are tired, late, or slightly ashamed. The gap is information. It does not make you a fraud by default. It shows which sentence is currently in charge.
+      `A stated value is what you say when you are rested and being watched. A kept value is what you protect when you are tired, late, or slightly ashamed. The gap shows which sentence is currently in charge. It does not make you a fraud.
 
-Look at a recent week and ask what you refused to drop. Sleep, a person's message, the quality of a piece of work, being right, looking successful, a prayer, a workout, a scroll. Whatever survived the squeeze is a candidate. Whatever vanished at the first inconvenience might still matter to you. It is not yet a kept value. Psychology in Practice lets a value beat a label in a loud room. This lesson finds the value from protection, not from a poster.
-
-Keep two candidates at most. A list of twelve values is a mood board. Two that you have already paid for with time are usable.`,
+Watch one recent week. Whatever survived the squeeze is a candidate. Whatever vanished at the first inconvenience is not yet kept. Keep two candidates at most. Twelve values is a mood board.`,
       {
-        example:
-          "You say family comes first, and last Thursday you stayed late to fix a bug nobody needed until Monday. That does not erase a family value. It says craft, or being the reliable one, took the hour. Name that before you write a purpose sentence your calendar will not back.",
+        examples: [
+          "You say family comes first, then stay late to fix a bug nobody needed until Monday. Craft, or being the reliable one, took the hour.",
+          "On a short night you skip the gym you talk about, answer your brother, and clarify a diagram nobody required. The brother and the diagram are kept so far. The gym is still stated.",
+          "You protect a nightly text to your partner and drop the language app at the first late meeting. The text is a candidate. The app is a plan.",
+        ],
       },
     ),
     scenario(
@@ -595,14 +606,15 @@ const m5Tie = lesson(
     explain(
       "life-m5-tie-ex",
       "Keep the three words apart",
-      `A value is a direction: fairness, care, competence, courage, faith, craft. You do not finish a direction. You face it or you drift. A goal is a destination: ship the guide, visit on Sundays, pass the exam, save a specific amount. You can arrive, miss, or replace a goal. A purpose sentence ties one or two values to who they are for, and it points at a destination you could fail.
+      `A value is a direction you do not finish: fairness, care, competence, courage. A goal is a destination you can miss or replace: ship the guide, visit on Sundays, pass the exam. A purpose sentence ties one or two values to who they are for, and points at a destination you could fail.
 
-People often start at the destination. "I want the title" is a goal. It becomes a purpose sentence when you can say the value and the someone. "I will use clear writing so new hires can do the job without guessing, because competence and fairness matter here." The title can change. The sentence can survive it.
-
-If you cannot name who it is for, even "the next person with this problem" or "the people in this household," you still have a self-improvement slogan. That can be a fine season. Call it a goal until a person or a duty shows up.`,
+A title is a goal until you can name the value and the someone. No someone means you still have a goal, or a slogan. "The next person with this problem" counts.`,
       {
-        example:
-          "Direction: care. Destination: cook Tuesday dinners this month. Someone: your housemates. Sentence: I will use Tuesday dinners to make this house easier to live in, because care matters here. Missing the dinners is a real miss. Feeling unmotivated on Tuesday is a mood.",
+        examples: [
+          "Care, Tuesday dinners, your housemates: \"I will use Tuesday dinners to make this house easier to live in, because care matters here.\" Missing the dinners is a real miss. Feeling unmotivated is a mood.",
+          "\"I want the senior title\" is a destination. \"I will use clear writing so new hires can do the job without guessing, because competence and fairness matter here\" can survive a title change.",
+          "\"Get better at running\" names no one. That can be a fine season. Call it a goal until a person or a duty shows up.",
+        ],
       },
     ),
     map(
@@ -650,14 +662,15 @@ const m6Sketch = lesson(
     explain(
       "life-m6-sketch-ex",
       "A sketch is allowed to look ordinary",
-      `A popular picture uses four overlapping circles: what you can already do, what you care about, what someone needs, and what can support the life (often drawn as pay). The overlap is offered as your purpose. As a sketch it is useful. It forces a strength, a value, a someone, and a way the activity can continue.
+      `Four circles can sketch a sentence: what you can already do, what you care about, what someone needs, and what can support the life. Use it in pencil. It is a modern sketch, not an ancient doctrine.
 
-As history, the picture is modern. It is not an ancient doctrine. The Japanese word ikigai is older and plainer: a reason for getting up, often small, daily, and not necessarily a career. Using that word to bless a four-circle career poster mixes two ideas. Use the sketch. Skip the costume.
-
-Fill it in pencil. Strength: something you can already do that another person can feel. Care: a value from the tired week, not from a list online. Someone: a person or a group you can name. Support: money, time, or a role that keeps the activity possible. An empty circle means the sentence is unfinished. The empty someone is the usual hole.`,
+In the older plain sense, ikigai is a reason for getting up, often small and daily, not necessarily a career. Skip the costume. An empty circle means the sentence is unfinished. The empty someone is the usual hole.`,
       {
-        example:
-          "You explain tangled systems calmly. You care about fairness. New teammates are the someone. The work already sits inside your job, so the life can hold it. Sketch: I will use calm explanations so new teammates can work without a private code, because fairness matters here. That is a hypothesis, not a discovered essence.",
+        examples: [
+          "You explain tangled systems calmly, you care about fairness, and new teammates are the someone. The job already holds the work. That sketch can be tested. It is not a discovered essence.",
+          "Watering the plants and walking a neighbor's dog can be a reason to get up. That can fit the plain sense of ikigai without being a career diagram.",
+          "Strength, care, and pay are filled in, and the someone box says \"people.\" Name a person or a group, or the sketch is still a self-project.",
+        ],
       },
     ),
     blank(
@@ -699,16 +712,17 @@ const m6Clap = lesson(
     explain(
       "life-m6-clap-ex",
       "Two tests, in a fixed order",
-      `Two tests keep a pretty sentence honest. The respect test: if nobody clapped, posted, promoted, or thanked you, would you still take this as worth doing? If the answer is no, the sentence may be about status. Status can be a goal. It is a shaky purpose, because it dies when the room goes quiet.
+      `Use this order: sentence, rival, month, respect. If the respect test fails, rewrite before you spend the month.
 
-The month test names one observation you could make if the sentence is alive. Not a feeling. An action, a product, or another person's experience. "I will feel aligned" cannot be checked on a bad day. "The notes exist, and two new people have used them" can.
+The respect test: would you still take this as worth doing if nobody clapped, posted, or thanked you? If not, you may be holding a status goal.
 
-Name the rival you are setting aside in the same breath. A rival is the standard you are not using as the main one: comfort, a parent's sentence, status, a single title, or a duty you have looked at and declined. Naming it stops the draft from pretending it is the only good life.
-
-Use this order. Sentence, rival, month observation, respect test. If the respect test fails, change the sentence before you spend a month on it.`,
+The month names one observation: an action, a product, or another person's experience. Name the rival you are setting aside, so the draft does not pretend to be the only good life.`,
       {
-        example:
-          "Sentence: I will use Sunday calls to keep my grandmother company, because care matters here. Rival set aside: looking like the devoted grandchild online. Month: four calls she would recognize as real conversations. Respect test: I would still call if I never mentioned them. If I would only call when I can post, the sentence is about the post.",
+        examples: [
+          "Sunday calls so your grandmother has company. Rival: looking devoted online. Month: four calls she would recognize as conversations. You would still call if you never mentioned them.",
+          "You would write the guide only if the director will see it. The respect test fails. The guide is a prop for status.",
+          "\"Two new people used the notes\" can be checked. \"I will feel aligned\" cannot, especially on a bad day.",
+        ],
       },
     ),
     map(
@@ -755,14 +769,15 @@ const m7Borrowed = lesson(
     explain(
       "life-m7-borrowed-ex",
       "Inherited, performed, or delayed",
-      `A borrowed purpose is a sentence someone else wrote that you have not accepted. A parent, a boss, a feed, a school, a culture. Borrowing is how people learn, so a first draft is often borrowed. It becomes a problem when you defend it as a discovery while the week serves the audience.
+      `A borrowed purpose is someone else's sentence that you defend as a discovery while the week serves their audience. Learning a standard from a person is ordinary. Performing it as your own finding is the trap.
 
-Three shapes show up often. The inherited sentence: people like us become this, stay here, or never make a fuss. The performed sentence: the life looks aimed because it photographs well. The delayed sentence: you will choose after you feel called. A calling is a gift when it arrives. It is a poor gate. A lot of good work starts before the feeling.
-
-A season is allowed. A small child, a credential, a person who is dying, or a debt can be the true sentence for this stretch and a bad sentence for a whole life. Say the season out loud. "For this year I will use my evenings to get the license, because competence matters for the work I want next." An honest season is easier to live than a forever claim you do not believe.`,
+Three shapes: inherited ("people like us do this"), performed (it photographs well), and delayed (you will choose after you feel called). A calling can be a gift. It is a poor gate. A season is allowed if you say the stretch out loud.`,
       {
-        example:
-          "Your feed rewards public building, so you start projects you can announce. A family rule about not wasting talent may be in the mix. A season sentence is smaller: for eight weeks I will finish one tool the team uses, and a post does not count as the work.",
+        examples: [
+          "Your feed rewards projects you can announce. For eight weeks, finish one tool the team uses. A post does not count as the work.",
+          "Two years of waiting to feel called, in a job you neither respect nor chose, is the delayed shape. Drop the feeling as a gate and write a season you can test.",
+          "\"For this year I will use evenings to get the license, because competence matters for the work I want next.\" An honest season is easier to live than a forever claim you do not believe.",
+        ],
       },
     ),
     scenario(
@@ -814,16 +829,19 @@ const m7Empty = lesson(
     explain(
       "life-m7-empty-ex",
       "Sort the emptiness before you theorize",
-      `This is education, not therapy, and not a diagnosis. Some flatness belongs to the earlier lessons: a borrowed sentence, a missing person, no skill you can grow, or a standard you have not chosen. The moves on this path apply there.
+      `This is education, not a diagnosis.
 
-Some emptiness is a health problem. Philosophy is the wrong tool when hopelessness stays for weeks, ordinary tasks stop being possible, or you do not want to be alive. Talk to someone qualified: a doctor, a therapist, or a local crisis service. If you are in immediate danger, contact emergency services. A sharper theory of purpose will not substitute for care.
+A borrowed sentence, a missing person, no skill you can grow, or a values gap is a drafting problem. The tools on this path apply there.
 
-You can hold both truths across a year. A heavy episode is not a verdict that your life fails every standard. A real values problem is also not something to dismiss. The sorting question is practical. Can you still do small ordinary things, and is the pain mainly that you have not chosen a standard? Or has the floor dropped out? If the floor has dropped out, get care first. Come back to the sentence when you have a floor to stand on.
+Talk to someone qualified when hopelessness stays for weeks, ordinary tasks stop being possible, or you do not want to be alive: a doctor, a therapist, or a local crisis service. If you are in immediate danger, contact emergency services. Come back to the sentence when you have a floor to stand on.
 
-Burnout is a smaller cousin: a long demand with too little recovery, often with cynicism about work you used to respect. That deserves a human conversation and a change in the load. A grander purpose stacked on no sleep does not fix it.`,
+Burnout is a long demand with too little recovery. Change the load. A grander purpose on no sleep does not fix it.`,
       {
-        example:
-          "For ten days you cannot answer mail, food tastes like nothing, and you keep thinking people would be better off without you. That is past the line of \"I need a better philosophy.\" Tell someone qualified this week. The purpose sentence can wait.",
+        examples: [
+          "Bored on Sunday, wondering if the job fits: a drafting problem. Ask which standard the week served.",
+          "The poster and the calendar disagree: a values gap. Name the sentence the week actually served.",
+          "For ten days you cannot answer mail, food tastes like nothing, and you keep thinking people would be better off without you. Tell someone qualified this week. The purpose sentence can wait.",
+        ],
       },
     ),
     choice(
@@ -874,14 +892,15 @@ const m8Draft = lesson(
     explain(
       "life-m8-draft-ex",
       "Plain enough for a tired day",
-      `Write a draft you could say out loud without performing. This shape helps: I will use [strength] for [someone], because [value]. Then add the destination you could miss, the rival you are setting aside, and the observation this month would show.
+      `Say it in a shape you can remember when you are tired: I will use [strength] for [someone], because [value]. Add the destination you could miss, the rival you are setting aside, and what this month would show.
 
-Keep it short enough to remember when you are tired. Two sentences are plenty. If you need a paragraph of identity language, you are probably writing for an audience. Cut back to the strength, the someone, the value, and the month.
-
-You may dislike the first draft. A draft that feels slightly too plain is often closer than one that feels inspiring. Inspiration is a mood. The month is the test. If a received duty, a faith, or a season is your real answer, say that in the same shape. "I will use Tuesday evenings to sit with my father, because this is a duty I accept, and I am setting aside the idea that only chosen projects count."`,
+Two sentences are plenty. A paragraph of identity language is usually for an audience. A duty, a faith, or a season can use the same shape. A draft that feels slightly too plain is often closer than one that feels inspiring.`,
       {
-        example:
-          "I will use patient explanations for the new people on my team, because fairness matters here. I am setting aside status. This month the notes exist, and two people have used them without asking me to translate.",
+        examples: [
+          "\"I will use patient explanations for the new people on my team, because fairness matters here. I am setting aside status. This month the notes exist, and two people have used them.\"",
+          "\"I will use Tuesday evenings to sit with my father, because this is a duty I accept. I am setting aside the idea that only chosen projects count.\"",
+          "\"I am a clarity-bringer on a journey of authentic impact\" needs a cut back to strength, someone, value, and month.",
+        ],
       },
     ),
     short(
@@ -923,14 +942,15 @@ const m8Board = lesson(
     explain(
       "life-m8-board-ex",
       "Bring the path to one case",
-      `Sam likes the sentence "I help people find clarity." Sam's week is mostly slides that impress a director, a feed of other people's careers, and a younger cousin Sam keeps meaning to call. A post that does well brings a spike of purpose. Sunday is flat. Sleep is okay. Sam can still work, cook, and see friends. Sam's mother says the family purpose is a stable prestigious job. Sam has not said whether that duty is accepted. A colleague Sam respects asked for a plain written guide. Sam delayed it because it would not be visible.
+      `Sam likes "I help people find clarity." The week is slides for a director, a feed of other careers, and a cousin Sam keeps meaning to call. A post that does well brings a spike. Sunday is flat. Sleep is okay, and Sam can still work, cook, and see friends. Sam's mother says the family purpose is a stable prestigious job. Sam has not accepted that duty. A respected colleague asked for a plain guide. Sam delayed it because it would not be visible.
 
-The floor has not dropped out, so this is a drafting problem. Ask the questions you already have. Which question is Sam in, mood or standard? Which standard is running the week? What did the week protect? Who could the someone be? What is borrowed? What would a month show?
-
-One possible draft: "I will use plain guides for the cousin and the colleague, because clarity matters here. I am setting aside the director's applause. This month the guide is finished and the cousin gets one real call." A different draft can be honest too. The checks ask for the moves.`,
+The floor has not dropped out, so this is a drafting problem. Ask which standard the week served, what it protected, who the someone could be, what is borrowed, and what a month would show.`,
       {
-        example:
-          "If Sam only finished the guide when it could be shown to the director, the respect test would fail. The guide would be a prop for status. Clarity would still be a stated value, not yet a kept one.",
+        examples: [
+          "One draft: \"I will use plain guides for the cousin and the colleague, because clarity matters here. I am setting aside the director's applause. This month the guide is finished and the cousin gets one real call.\"",
+          "If the guide gets finished only when the director can see it, the respect test fails. Clarity is stated, not yet kept.",
+          "The spike after a successful post reports applause. It is a weak standard if Sam would not respect the work in a quiet room.",
+        ],
       },
     ),
     choice(

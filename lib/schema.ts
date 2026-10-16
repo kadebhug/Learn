@@ -78,6 +78,7 @@ const blockSchema = z.discriminatedUnion("type", [
     heading: z.string().min(1),
     body: z.string().min(1),
     example: z.string().optional(),
+    examples: z.array(z.string().min(1)).min(1).max(6).optional(),
     analogy: z.string().optional(),
   }),
   z.object({

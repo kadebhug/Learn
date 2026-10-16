@@ -210,7 +210,14 @@ function TeachBody({ text }: { text: string }) {
   );
 }
 
+function casesFor(block: Extract<Lesson["blocks"][number], { type: "explain" }>) {
+  if (block.examples && block.examples.length > 0) return block.examples;
+  if (block.example) return [block.example];
+  return [];
+}
+
 function Explain({ block }: { block: Extract<Lesson["blocks"][number], { type: "explain" }> }) {
+  const cases = casesFor(block);
   return (
     <article className="grid gap-4">
       <h2 className="text-2xl font-semibold tracking-tight">{block.heading}</h2>
@@ -221,11 +228,21 @@ function Explain({ block }: { block: Extract<Lesson["blocks"][number], { type: "
           {block.analogy}
         </p>
       )}
-      {block.example && (
+      {cases.length === 1 && (
         <p className="rounded-[20px] bg-surface px-4 py-4 leading-relaxed ring-1 ring-line">
           <span className="font-semibold">For instance. </span>
-          {block.example}
+          {cases[0]}
         </p>
+      )}
+      {cases.length > 1 && (
+        <div className="grid gap-2 rounded-[20px] bg-surface px-4 py-4 leading-relaxed ring-1 ring-line">
+          <p className="font-semibold">For instance.</p>
+          <ul className="grid list-disc gap-2 pl-5">
+            {cases.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
       )}
     </article>
   );
