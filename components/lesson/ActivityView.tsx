@@ -15,7 +15,15 @@ export type Attempt = {
   kind: "teach" | "map" | "other";
 };
 
-export function ActivityView({ activity, onResult }: { activity: Activity; onResult: (attempt: Attempt) => void }) {
+export function ActivityView({
+  activity,
+  onResult,
+  onNote,
+}: {
+  activity: Activity;
+  onResult: (attempt: Attempt) => void;
+  onNote?: (id: string, text: string) => void;
+}) {
   switch (activity.type) {
     case "choice":
       return <ChoiceView prompt={activity.prompt} options={activity.options} answerIndex={activity.answerIndex} explain={activity.explain} onResult={onResult} />;
@@ -36,6 +44,8 @@ export function ActivityView({ activity, onResult }: { activity: Activity; onRes
       return <MapView activity={activity} onResult={onResult} />;
     case "teach":
       return <TeachView activity={activity} onResult={onResult} />;
+    case "reflect":
+      return <ReflectView activity={activity} onResult={onResult} onNote={onNote} />;
   }
 }
 
@@ -503,6 +513,58 @@ function TeachView({
           )}
         </FeedbackLine>
       )}
+    </div>
+  );
+}
+
+function ReflectView({
+  activity,
+  onResult,
+  onNote,
+}: {
+  activity: Extract<Activity, { type: "reflect" }>;
+  onResult: (attempt: Attempt) => void;
+  onNote?: (id: string, text: string) => void;
+}) {
+  const [value, setValue] = useState("");
+  const [kept, setKept] = useState(false);
+
+  function change(text: string) {
+    setValue(text);
+    if (kept) onNote?.(activity.id, text.trim());
+  }
+
+  function keep(text: string) {
+    onNote?.(activity.id, text);
+    if (!kept) {
+      setKept(true);
+      onResult({ correct: true, firstTry: true, kind: "other" });
+    }
+  }
+
+  return (
+    <div className="grid gap-3">
+      <p className="rounded-[20px] bg-soft px-4 py-4 leading-relaxed">{activity.help}</p>
+      <label className="text-lg font-semibold leading-snug" htmlFor={activity.id}>
+        {activity.prompt}
+      </label>
+      <textarea
+        id={activity.id}
+        className={`${field} min-h-32 py-3`}
+        value={value}
+        onChange={(event) => change(event.target.value)}
+      />
+      <div className="flex flex-wrap gap-2">
+        <button type="button" className={primaryBtn} onClick={() => keep(value.trim())} disabled={value.trim().length === 0}>
+          {kept ? "Update this answer" : "Keep this answer"}
+        </button>
+        {!kept && (
+          <button type="button" className={quietBtn} onClick={() => keep("")}>
+            Leave this blank
+          </button>
+        )}
+      </div>
+      {kept && <p className="text-sm text-muted">Saved for the sheet at the end. You can still edit it.</p>}
     </div>
   );
 }

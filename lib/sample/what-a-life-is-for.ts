@@ -65,6 +65,18 @@ function teach(id: string, prompt: string, keyPoints: string[]): Block {
   };
 }
 
+function reflect(id: string, label: string, prompt: string, help: string): Block {
+  return {
+    id: `${id}-b`,
+    type: "activity",
+    activity: { id, type: "reflect", label, prompt, help },
+  };
+}
+
+function copySheet(id: string, heading: string, intro: string): Block {
+  return { id, type: "copy", heading, intro };
+}
+
 function lesson(id: string, title: string, minutes: number, summary: string, blocks: Block[]): Lesson {
   return { id, title, minutes, summary, blocks };
 }
@@ -1015,6 +1027,89 @@ The floor has not dropped out, so this is a drafting problem. Ask which standard
   ],
 );
 
+const m9Lines = lesson(
+  "life-m9-lines",
+  "Eight questions, then your lines",
+  12,
+  "Each question is explained before you answer. At the end, your lines are together to copy.",
+  [
+    explain(
+      "life-m9-lines-ex",
+      "A loop, not a verdict",
+      `These questions do not assign a purpose. They collect what you already do, what you can sustain, and what you would revise. A promise, a role, or a faith can still be your answer. Write it in the same boxes.
+
+The loop is short.
+
+- Notice what gets your time when no one is watching.
+- Try a match for a set period.
+- Watch your energy, your relationships, and whether you would still respect the work.
+- Adjust.
+
+A framework can suggest a hypothesis. It does not replace what you write here. Each next screen explains the question, then asks for your line.`,
+      {
+        examples: [
+          "\"I answer my brother before I open the feed\" names a real protection. \"I value connection\" is a poster.",
+          "\"I lose the afternoon explaining a tangled system to a new person\" names a peak. \"I want to feel aligned\" is only a mood.",
+          "\"For this year, the license. Then I look again\" names a stretch. \"This is my calling forever\" is hard to revise.",
+        ],
+      },
+    ),
+    reflect(
+      "life-m9-values",
+      "When no one is watching",
+      "What do you actually treat as important when you are not performing for others?",
+      "This is a values check, not a ranking exercise. People often find connection, competence, autonomy, novelty, fairness, beauty, understanding, security, status, play, or contribution. Write one or two you already spend time on. Status can be a goal. It is a shaky purpose if it dies when the room is quiet.",
+    ),
+    reflect(
+      "life-m9-peak",
+      "Most absorbed",
+      "When have you felt most alive, absorbed, or satisfied?",
+      "Name the activity or the relationship, not only the feeling. A peak is a clue about what you value. It does not settle which standard you accept.",
+    ),
+    reflect(
+      "life-m9-trough",
+      "Empty or resentful",
+      "When have you felt empty or resentful?",
+      "Same rule. The pattern can show a mismatch: no say, no one in it, or work you would not defend. A gray week is not yet the wrong life.",
+    ),
+    reflect(
+      "life-m9-strength",
+      "What you can do",
+      "What are you relatively good at, and what do people seek you out for?",
+      "A strength here is something another person can feel. A title does not count by itself. If you are unsure, name a small thing people already ask you to do.",
+    ),
+    reflect(
+      "life-m9-limit",
+      "What limits the options",
+      "What limitation shapes a realistic option right now?",
+      "Health, circumstances, or temperament. A purpose that ignores these tends to frustrate you. The limit is not the purpose. It is part of what a sentence has to fit.",
+    ),
+    reflect(
+      "life-m9-reach",
+      "Who it reaches",
+      "Who, if anyone, is affected when this goes well?",
+      "Many people stay with an effort that reaches someone else, or something larger than their own comfort. That pattern is common. It is not a rule that every season must serve a crowd. If you cannot name a person or a duty, say so, and call that line a goal until someone shows up.",
+    ),
+    reflect(
+      "life-m9-span",
+      "How long this holds",
+      "Is this a short stretch, or a longer way of being?",
+      "A project, a relationship, or a skill can be the true sentence for this season. A vocation or a way of being can be the longer one. Both can be legitimate. Some people need a larger story. Others do well with successive meaningful stretches. If this is a season, name it.",
+    ),
+    reflect(
+      "life-m9-revise",
+      "What would revise it",
+      "What would make you change this answer later?",
+      "Almost no one settles this once. What felt purposeful at 20 often shifts by 40. Name a fact that would push a revision: a month with no action, a duty you no longer accept, or a constraint that changed. Treating the answer as provisional takes the pressure off getting it right forever. A sentence you cannot imagine revising is usually a slogan.",
+    ),
+    copySheet(
+      "life-m9-lines-copy",
+      "Your lines",
+      "These are your answers, in the order you wrote them. Copy them before you draft the working sentence. A blank line is a question you skipped. Then try the loop: notice, try a set period, watch what happens, and adjust.",
+    ),
+  ],
+);
+
 function courseModule(id: string, title: string, summary: string, lessons: Lesson[]): Module {
   return { id, title, summary, lessons };
 }
@@ -1025,7 +1120,7 @@ export const whatALifeIsFor: Topic = {
   blurb:
     "Tell how meaning feels apart from what would make a life good, then leave with a purpose sentence and a one-month test. This is education, not a diagnosis, a calling, or clinical advice.",
   difficulty: "beginner",
-  minutes: 90,
+  minutes: 102,
   source: "sample",
   modules: [
     courseModule(
@@ -1069,6 +1164,12 @@ export const whatALifeIsFor: Topic = {
       "Borrowed purpose",
       "Goal: catch a purpose you inherited, a wait for a calling, and emptiness that needs care rather than a better theory. Badge: Own It. Education, not therapy. Constant hopelessness, or a wish not to be alive, needs someone qualified to help.",
       [m7Borrowed, m7Empty],
+    ),
+    courseModule(
+      "life-m9",
+      "Determining your own",
+      "Goal: answer what you already protect, what you can sustain, and what would revise it, then copy your lines. Badge: Your Lines. A received duty can still be the answer. Write it in the same boxes.",
+      [m9Lines],
     ),
     courseModule(
       "life-m8",

@@ -96,11 +96,11 @@ assert.equal(practiceText.includes("\u2013"), false, "en dash");
 const life = sampleTopics.find((topic) => topic.slug === "what-a-life-is-for");
 assert.ok(life);
 assert.equal(life.difficulty, "beginner");
-assert.equal(life.minutes, 90);
-assert.equal(life.modules.length, 8);
+assert.equal(life.minutes, 102);
+assert.equal(life.modules.length, 9);
 assert.equal(
   life.modules.reduce((count, mod) => count + mod.lessons.length, 0),
-  16,
+  17,
 );
 assert.match(life.blurb, /not a diagnosis/i);
 assert.match(life.modules.find((mod) => mod.id === "life-m7")?.summary ?? "", /qualified/i);

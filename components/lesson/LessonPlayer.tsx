@@ -9,7 +9,7 @@ import { lessonHref, topicHref } from "@/lib/hrefs";
 import { useGrove } from "@/lib/store";
 import type { Lesson, Topic } from "@/lib/types";
 import { levelFor } from "@/lib/xp";
-import { primaryBtn, quietBtn } from "@/components/ui";
+import { field, primaryBtn, quietBtn } from "@/components/ui";
 import { ActivityView, type Attempt } from "./ActivityView";
 
 export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }) {
@@ -19,7 +19,8 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
   const xp = useGrove((state) => state.xp);
 
   const [index, setIndex] = useState(0);
-  const [ready, setReady] = useState(lesson.blocks[0]?.type === "explain");
+  const [ready, setReady] = useState(lesson.blocks[0]?.type === "explain" || lesson.blocks[0]?.type === "copy");
+  const [notes, setNotes] = useState<Record<string, string>>({});
   const [toast, setToast] = useState<string | null>(null);
   const [finished, setFinished] = useState<{ xp: number; leveled: boolean } | null>(null);
   const startedXp = useRef(xp);
@@ -99,7 +100,8 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
     if (index < lesson.blocks.length - 1) {
       const nextIndex = index + 1;
       setIndex(nextIndex);
-      setReady(lesson.blocks[nextIndex]?.type === "explain");
+      const next = lesson.blocks[nextIndex];
+      setReady(next?.type === "explain" || next?.type === "copy");
       setToast(null);
       return;
     }
@@ -167,8 +169,14 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
       </div>
       <div className="flex-1 py-6">
         {block?.type === "explain" ? <Explain block={block} /> : null}
+        {block?.type === "copy" ? <CopySheet block={block} lines={linesFor(lesson, notes)} /> : null}
         {block?.type === "activity" ? (
-          <ActivityView key={block.id} activity={block.activity} onResult={onResult} />
+          <ActivityView
+            key={block.id}
+            activity={block.activity}
+            onResult={onResult}
+            onNote={(id, text) => setNotes((prev) => ({ ...prev, [id]: text }))}
+          />
         ) : null}
       </div>
       <footer className="sticky bottom-0 grid gap-2 bg-paper/95 py-4 backdrop-blur" style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}>
@@ -182,6 +190,60 @@ export function LessonPlayer({ topic, lesson }: { topic: Topic; lesson: Lesson }
         </button>
       </footer>
     </main>
+  );
+}
+
+function linesFor(lesson: Lesson, notes: Record<string, string>) {
+  return lesson.blocks.flatMap((item) => {
+    if (item.type !== "activity" || item.activity.type !== "reflect") return [];
+    return [{ label: item.activity.label, text: notes[item.activity.id] ?? "" }];
+  });
+}
+
+function sheetText(lines: { label: string; text: string }[]) {
+  return lines.map((line) => `${line.label}\n${line.text || "(left blank)"}`).join("\n\n");
+}
+
+function CopySheet({
+  block,
+  lines,
+}: {
+  block: Extract<Lesson["blocks"][number], { type: "copy" }>;
+  lines: { label: string; text: string }[];
+}) {
+  const plain = sheetText(lines);
+  const [copied, setCopied] = useState(false);
+  const [hint, setHint] = useState<string | null>(null);
+  const area = useRef<HTMLTextAreaElement>(null);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(plain);
+      setCopied(true);
+      setHint(null);
+    } catch {
+      area.current?.focus();
+      area.current?.select();
+      setCopied(false);
+      setHint("Select the text and copy it from there.");
+    }
+  }
+
+  return (
+    <article className="grid gap-4">
+      <h2 className="text-2xl font-semibold tracking-tight">{block.heading}</h2>
+      <p className="leading-relaxed">{block.intro}</p>
+      <textarea ref={area} readOnly value={plain} className={`${field} min-h-64 py-3`} aria-label="Your answers" />
+      <button type="button" className={primaryBtn} onClick={copy}>
+        Copy answers
+      </button>
+      {copied && (
+        <p className="text-sm font-semibold text-grove" role="status">
+          Copied.
+        </p>
+      )}
+      {hint && <p className="text-sm text-muted">{hint}</p>}
+    </article>
   );
 }
 

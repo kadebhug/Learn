@@ -71,6 +71,16 @@ export type TeachActivity = {
   keyPoints: string[];
 };
 
+export type ReflectActivity = {
+  id: string;
+  type: "reflect";
+  /** Short name used on the copy sheet. */
+  label: string;
+  prompt: string;
+  /** What the question is asking, shown before the person writes. */
+  help: string;
+};
+
 export type Activity =
   | ChoiceActivity
   | BlankActivity
@@ -78,7 +88,8 @@ export type Activity =
   | ShortActivity
   | MapActivity
   | ScenarioActivity
-  | TeachActivity;
+  | TeachActivity
+  | ReflectActivity;
 
 export type ExplainBlock = {
   id: string;
@@ -96,7 +107,14 @@ export type ActivityBlock = {
   activity: Activity;
 };
 
-export type Block = ExplainBlock | ActivityBlock;
+export type CopyBlock = {
+  id: string;
+  type: "copy";
+  heading: string;
+  intro: string;
+};
+
+export type Block = ExplainBlock | ActivityBlock | CopyBlock;
 
 export type Lesson = {
   id: string;

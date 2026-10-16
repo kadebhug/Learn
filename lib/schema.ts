@@ -61,6 +61,14 @@ const teachSchema = z.object({
   keyPoints: z.array(z.string().min(1)).min(1),
 });
 
+const reflectSchema = z.object({
+  id: z.string().min(1),
+  type: z.literal("reflect"),
+  label: z.string().min(1),
+  prompt: z.string().min(1),
+  help: z.string().min(1),
+});
+
 const activitySchema = z.discriminatedUnion("type", [
   choiceSchema,
   blankSchema,
@@ -69,6 +77,7 @@ const activitySchema = z.discriminatedUnion("type", [
   mapSchema,
   scenarioSchema,
   teachSchema,
+  reflectSchema,
 ]);
 
 const blockSchema = z.discriminatedUnion("type", [
@@ -85,6 +94,12 @@ const blockSchema = z.discriminatedUnion("type", [
     id: z.string().min(1),
     type: z.literal("activity"),
     activity: activitySchema,
+  }),
+  z.object({
+    id: z.string().min(1),
+    type: z.literal("copy"),
+    heading: z.string().min(1),
+    intro: z.string().min(1),
   }),
 ]);
 
